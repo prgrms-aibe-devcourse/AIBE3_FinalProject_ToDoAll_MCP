@@ -20,7 +20,7 @@ public class AiInterviewController {
 
     @PostMapping("/generate-questions")
     public ResponseEntity<Void> generate(@RequestBody InterviewGenerateRequest dto) {
-        aiInterviewService.generateQuestions(dto.interviewId(), dto.resumeId(), dto.jdId());
+        aiInterviewService.generateQuestions(dto.interviewId());
         return ResponseEntity.accepted().build();
     }
     //면접 요약 생성 요청 API
@@ -30,7 +30,6 @@ public class AiInterviewController {
         return ResponseEntity.accepted().build();
     }
 
-    public record InterviewGenerateRequest(Long interviewId, Long resumeId, Long jdId) {}
     public record InterviewSummaryRequest(Long interviewId) {}
-
+    public record InterviewGenerateRequest(Long interviewId) {}
 }
