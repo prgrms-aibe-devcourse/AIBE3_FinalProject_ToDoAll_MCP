@@ -15,12 +15,12 @@ public class AiInterviewService {
     private final ToolCallbackProvider toolCallbackProvider;
     private static final Logger log = LoggerFactory.getLogger(AiInterviewService.class);
 
-    public void generateQuestions(Long interviewId, Long resumeId, Long jdId) {
-        String systemPrompt = buildSystemPrompt(interviewId, resumeId, jdId);
+    public void generateQuestions(Long interviewId) {
+        String systemPrompt = buildSystemPrompt(interviewId);
 
         long start = System.currentTimeMillis();
-        log.info("[AI] generateQuestions START interviewId={}, resumeId={}, jdId={}",
-                interviewId, resumeId, jdId);
+        log.info("[AI] generateQuestions START interviewId={}",
+                interviewId);
 
         chatClient.prompt()
                 .system(systemPrompt)
@@ -33,7 +33,7 @@ public class AiInterviewService {
                 interviewId, (end - start));
     }
 
-    private String buildSystemPrompt(Long interviewId, Long resumeId, Long jdId) {
+    private String buildSystemPrompt(Long interviewId) {
         return """
                 너는 기업 채용 면접에서 사용할 질문을 설계하는 전문 AI 인터뷰 코파일럿이다.
                 네가 DB나 서버 데이터에 접근해야 할 때는 반드시 MCP tool을 사용해야 한다.
