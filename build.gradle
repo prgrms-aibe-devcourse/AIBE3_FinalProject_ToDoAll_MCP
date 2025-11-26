@@ -10,7 +10,7 @@ ext {
 
 group = 'com'
 version = '0.0.1-SNAPSHOT'
-description = 'AIBE3_FinalProject_ToDoAll_AI'
+description = 'AIBE3_FinalProject_ToDoAll_MCP'
 
 java {
     toolchain {

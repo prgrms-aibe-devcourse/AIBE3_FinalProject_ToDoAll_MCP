@@ -17,9 +17,9 @@ public class AiInterviewController {
 
     @PostMapping("/generate-questions")
     public ResponseEntity<Void> generate(@RequestBody InterviewGenerateRequest dto) {
-        aiInterviewService.generateQuestions(dto.interviewId(), dto.resumeId(), dto.jdId());
+        aiInterviewService.generateQuestions(dto.interviewId());
         return ResponseEntity.accepted().build();
     }
 
-    public record InterviewGenerateRequest(Long interviewId, Long resumeId, Long jdId) {}
+    public record InterviewGenerateRequest(Long interviewId) {}
 }
