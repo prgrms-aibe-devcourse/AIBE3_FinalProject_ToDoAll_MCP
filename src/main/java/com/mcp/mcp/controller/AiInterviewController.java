@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AiInterviewController {
 
     private final AiInterviewService aiInterviewService;
-    private final AiInterviewSummaryService aiInterviewSummaryService; // ✅ 요약용 (지금 만든 서비스)
+    private final AiInterviewSummaryService aiInterviewSummaryService;
 
 
     @PostMapping("/generate-questions")
