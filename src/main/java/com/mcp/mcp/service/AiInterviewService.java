@@ -1,6 +1,8 @@
 package com.mcp.mcp.service;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ public class AiInterviewService {
 
     private final ChatClient chatClient;
     private final ToolCallbackProvider toolCallbackProvider;
+    private static final Logger log = LoggerFactory.getLogger(AiInterviewService.class);
 
     public void generateQuestions(Long interviewId, Long resumeId, Long jdId) {
         String systemPrompt = """
@@ -89,10 +92,18 @@ public class AiInterviewService {
               "면접 질문 10개를 성공적으로 저장했습니다."
             """.formatted(interviewId, resumeId, jdId);
 
+        long start = System.currentTimeMillis();
+        log.info("[AI] generateQuestions START interviewId={}, resumeId={}, jdId={}",
+                interviewId, resumeId, jdId);
+
         chatClient.prompt()
                 .system(systemPrompt)
                 .toolCallbacks(toolCallbackProvider)
                 .call()
                 .content();
+
+        long end = System.currentTimeMillis();
+        log.info("[AI] generateQuestions END   interviewId={} duration={} ms",
+                interviewId, (end - start));
     }
 }
