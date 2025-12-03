@@ -18,6 +18,6 @@ spring:
         streamable-http:
           connections:
             jobda-server:
-              url: http://15.164.83.163:8080
+              url: ${BE_SERVER_URL}
         toolcallback:
           enabled: true
