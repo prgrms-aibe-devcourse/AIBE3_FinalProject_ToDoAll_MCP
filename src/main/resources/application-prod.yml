@@ -20,7 +20,7 @@ spring:
             jobda-server:
               url: ${BE_SERVER_URL}
         toolcallback:
-          enabled: false
+          enabled: true
 
 management:
   endpoints:
