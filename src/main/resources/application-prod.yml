@@ -13,14 +13,7 @@ spring:
 
     mcp:
       client:
-        name: jobda-mcp-client
-        version: 0.0.1
-        streamable-http:
-          connections:
-            jobda-server:
-              url: ${BE_SERVER_URL}
-        toolcallback:
-          enabled: true
+        enabled: false
 
 management:
   endpoints:
