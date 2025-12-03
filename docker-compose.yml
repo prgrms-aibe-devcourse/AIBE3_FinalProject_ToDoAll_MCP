@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jobda-mcp
+    ports:
+      - "8090:8090"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - OPENAI_API_KEY_AI=${OPENAI_API_KEY_AI}
+      - BE_SERVER_URL=${BE_SERVER_URL}
+    restart: on-failure
