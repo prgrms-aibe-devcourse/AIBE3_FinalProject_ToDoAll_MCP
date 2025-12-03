@@ -20,4 +20,13 @@ spring:
             jobda-server:
               url: ${BE_SERVER_URL}
         toolcallback:
-          enabled: true
+          enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
