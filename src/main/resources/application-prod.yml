@@ -18,7 +18,11 @@ spring:
 
     mcp:
       client:
-        enabled: false
+        enabled: true
+        streamable-http:
+          connections:
+            jobda-server:
+              url: http://15.164.83.163:8080
 
 management:
   endpoints:
