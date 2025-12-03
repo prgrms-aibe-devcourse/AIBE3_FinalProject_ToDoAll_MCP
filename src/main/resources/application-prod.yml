@@ -11,11 +11,6 @@ spring:
       chat:
         model: gpt-4o-mini
 
-  autoconfigure:
-    exclude:
-      - org.springframework.ai.mcp.client.common.autoconfigure.McpClientAutoConfiguration
-      - org.springframework.ai.mcp.client.common.autoconfigure.McpToolCallbackAutoConfiguration
-
     mcp:
       client:
         enabled: true
