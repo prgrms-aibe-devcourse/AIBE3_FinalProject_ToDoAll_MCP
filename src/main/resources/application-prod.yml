@@ -1,0 +1,23 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: jobda-mcp-client
+
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY_AI}
+      chat:
+        model: gpt-4o-mini
+
+    mcp:
+      client:
+        name: jobda-mcp-client
+        version: 0.0.1
+        streamable-http:
+          connections:
+            jobda-server:
+              url: http://15.164.83.163:8080
+        toolcallback:
+          enabled: true
