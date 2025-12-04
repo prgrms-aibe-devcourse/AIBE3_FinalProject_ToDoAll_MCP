@@ -22,12 +22,12 @@ public class AiInterviewService {
         log.info("[AI] generateQuestions START interviewId={}",
                 interviewId);
 
-        chatClient.prompt()
+        var response = chatClient.prompt()
                 .system(systemPrompt)
                 .toolCallbacks(toolCallbackProvider)
                 .call()
                 .content();
-
+        log.info(response);
         long end = System.currentTimeMillis();
         log.info("[AI] generateQuestions END   interviewId={} duration={} ms",
                 interviewId, (end - start));
