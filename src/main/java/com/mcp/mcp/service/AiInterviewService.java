@@ -1,36 +1,55 @@
 package com.mcp.mcp.service;
 
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AiInterviewService {
 
     private final ChatClient chatClient;
     private final ToolCallbackProvider toolCallbackProvider;
-    private static final Logger log = LoggerFactory.getLogger(AiInterviewService.class);
 
     public void generateQuestions(Long interviewId) {
-        String systemPrompt = buildSystemPrompt(interviewId);
-
+        log.info("[AI] generateQuestions START interviewId={}", interviewId);
         long start = System.currentTimeMillis();
-        log.info("[AI] generateQuestions START interviewId={}",
-                interviewId);
 
-        var response = chatClient.prompt()
-                .system(systemPrompt)
-                .toolCallbacks(toolCallbackProvider)
-                .call()
-                .content();
-        log.info(response);
-        long end = System.currentTimeMillis();
-        log.info("[AI] generateQuestions END   interviewId={} duration={} ms",
-                interviewId, (end - start));
+        try {
+            String systemPrompt = buildSystemPrompt(interviewId);
+
+            var response = chatClient.prompt()
+                    .system(systemPrompt)
+                    .toolCallbacks(toolCallbackProvider)
+                    .call()
+                    .content();
+
+            log.info("[AI] LLM Response (raw): {}", response);
+            int savedCount = extractSavedCountFromLog(response);
+            log.info("면접 질문 {}개를 성공적으로 저장했습니다.", savedCount);
+
+        } catch (Exception e) {
+            log.error("[AI] generateQuestions FAILED interviewId={}, reason={}",
+                    interviewId, e.getMessage(), e);
+            throw e;
+        } finally {
+            long end = System.currentTimeMillis();
+            log.info("[AI] generateQuestions END interviewId={} duration={} ms",
+                    interviewId, (end - start));
+        }
+    }
+
+    private int extractSavedCountFromLog(String response) {
+        try {
+            var matcher = java.util.regex.Pattern.compile("(\\d+)개").matcher(response);
+            if (matcher.find()) {
+                return Integer.parseInt(matcher.group(1));
+            }
+        } catch (Exception ignore) {}
+        return -1;
     }
 
     private String buildSystemPrompt(Long interviewId) {
