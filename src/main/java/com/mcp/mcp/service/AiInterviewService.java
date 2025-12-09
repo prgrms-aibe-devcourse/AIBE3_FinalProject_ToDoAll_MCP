@@ -22,6 +22,7 @@ public class AiInterviewService {
 
             var response = chatClient.prompt()
                     .system(systemPrompt)
+                    .user("interviewId=" + interviewId + " 에 대한 면접 질문 10개 생성 및 저장을 수행해줘.")
                     .call()
                     .content();
 
