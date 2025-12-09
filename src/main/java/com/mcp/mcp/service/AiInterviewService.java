@@ -20,15 +20,19 @@ public class AiInterviewService {
         try {
             String systemPrompt = buildSystemPrompt(interviewId);
 
-            var response = chatClient.prompt()
-                    .system(systemPrompt)
-                    .tools()
-                    .call()
-                    .content();
+            log.info("[AI] SystemPrompt 시작 =====");
+            log.info(systemPrompt);
+            log.info("[AI] SystemPrompt 끝 =====");
 
+            var result = chatClient.prompt()
+                    .system(systemPrompt)
+                    .call();
+
+            String response = result.content();
             log.info("[AI] LLM Response (raw): {}", response);
+
             int savedCount = extractSavedCountFromLog(response);
-            log.info("면접 질문 {}개를 성공적으로 저장했습니다.", savedCount);
+            log.info("[AI] 면접 질문 {}개를 성공적으로 저장했습니다.", savedCount);
 
         } catch (Exception e) {
             log.error("[AI] generateQuestions FAILED interviewId={}, reason={}",
