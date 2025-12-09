@@ -21,7 +21,7 @@ public class AiInterviewService {
             String systemPrompt = buildSystemPrompt(interviewId);
 
             var response = chatClient.prompt()
-                    .system(systemPrompt)
+                    .user("")
                     .call()
                     .content();
 
