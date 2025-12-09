@@ -29,3 +29,8 @@ management:
   endpoint:
     health:
       show-details: always
+
+logging:
+  level:
+    org.springframework.ai.mcp: DEBUG
+    com.mcp.mcp.service: DEBUG
