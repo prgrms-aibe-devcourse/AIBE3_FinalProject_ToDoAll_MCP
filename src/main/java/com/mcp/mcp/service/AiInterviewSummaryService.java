@@ -65,7 +65,6 @@ public class AiInterviewSummaryService {
         chatClient
                 .prompt()
                 .system(systemPrompt)
-                .user("interviewId=" + interviewId + " 에 대한 면접 질문 10개 생성 및 저장을 수행해줘.")
                 .call()
                 .content();
         // 요약 내용은 DB에 저장되므로 별도로 반환값을 사용하지 않는다.
