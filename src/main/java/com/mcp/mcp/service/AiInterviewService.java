@@ -22,6 +22,7 @@ public class AiInterviewService {
 
             var response = chatClient.prompt()
                     .system(systemPrompt)
+                    .tools()
                     .call()
                     .content();
 

@@ -65,6 +65,7 @@ public class AiInterviewSummaryService {
         chatClient
                 .prompt()
                 .system(systemPrompt)
+                .tools()
                 .call()
                 .content();
         // 요약 내용은 DB에 저장되므로 별도로 반환값을 사용하지 않는다.

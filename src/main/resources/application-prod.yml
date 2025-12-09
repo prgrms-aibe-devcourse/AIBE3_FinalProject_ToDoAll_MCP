@@ -32,5 +32,10 @@ management:
 
 logging:
   level:
+    root: INFO
+    org.springframework.ai: DEBUG
+    org.springframework.ai.chat.client.advisor: DEBUG
     org.springframework.ai.mcp: DEBUG
-    com.mcp.mcp.service: DEBUG
+    org.springaicommunity.mcp: DEBUG
+    org.springframework.web.client: DEBUG
+    com.mcp: DEBUG
