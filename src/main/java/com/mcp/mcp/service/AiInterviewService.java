@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 public class AiInterviewService {
 
     private final ChatClient chatClient;
-    private final ToolCallbackProvider toolCallbackProvider;
 
     public void generateQuestions(Long interviewId) {
         log.info("[AI] generateQuestions START interviewId={}", interviewId);
@@ -23,7 +22,6 @@ public class AiInterviewService {
 
             var response = chatClient.prompt()
                     .system(systemPrompt)
-                    .toolCallbacks(toolCallbackProvider)
                     .call()
                     .content();
 
