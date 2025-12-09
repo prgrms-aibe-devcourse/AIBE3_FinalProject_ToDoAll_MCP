@@ -18,6 +18,7 @@ spring:
           connections:
             jobda-server:
               url: http://15.164.83.163:8080
+              endpoint: /mcp
         toolcallback:
           enabled: true
 
