@@ -13,7 +13,9 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 @Configuration
 public class ChatClientConfig {
-
+    static {
+        log.info("[MCP] >>> ChatClientConfig 클래스 로딩됨 (static block)");
+    }
     @Bean
     public ChatClient chatClient(ChatClient.Builder builder,
                                  SyncMcpToolCallbackProvider mcpToolCallbackProvider) {
