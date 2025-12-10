@@ -3,12 +3,16 @@ package com.mcp.mcp.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.tool.ToolCallbackProvider;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class AiInterviewService {
+    @Value("${spring.ai.openai.api-key}")
+    private String apikey;
     private final ChatClient chatClient;
 
     public void generateQuestions(Long interviewId) {
