@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 public class AiInterviewSummaryService {
 
     private final ChatClient chatClient;
-    private final ToolCallbackProvider toolCallbackProvider;
 
     //주어진 인터뷰 ID에 대해 요약 생성을 수행한다.
 
@@ -66,7 +65,7 @@ public class AiInterviewSummaryService {
         chatClient
                 .prompt()
                 .system(systemPrompt)
-                .toolCallbacks(toolCallbackProvider)
+                .tools()
                 .call()
                 .content();
         // 요약 내용은 DB에 저장되므로 별도로 반환값을 사용하지 않는다.
