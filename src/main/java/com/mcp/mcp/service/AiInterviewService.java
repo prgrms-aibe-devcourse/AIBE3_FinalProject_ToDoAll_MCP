@@ -4,65 +4,44 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.tool.ToolCallbackProvider;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class AiInterviewService {
-    @Value("${spring.ai.openai.api-key}")
-    private String apikey;
     private final ChatClient chatClient;
 
     public void generateQuestions(Long interviewId) {
         log.info("[AI] generateQuestions START interviewId={}", interviewId);
         long start = System.currentTimeMillis();
-        String systemPrompt = buildSystemPrompt(interviewId);
-        log.info("systemPrompt={}", systemPrompt);
-        log.info("[AI] SystemPrompt 시작 =====");
-        log.info(systemPrompt);
-        log.info("[AI] SystemPrompt 끝 =====");
 
-        var result = chatClient.prompt()
-                .system(systemPrompt)
-                .call();
+        try {
+            String systemPrompt = buildSystemPrompt(interviewId);
 
-        String response = result.content();
-        log.info("[AI] LLM Response (raw): {}", response);
+            log.info("[AI] SystemPrompt 시작 =====");
+            log.info(systemPrompt);
+            log.info("[AI] SystemPrompt 끝 =====");
 
-        int savedCount = extractSavedCountFromLog(response);
-        log.info("[AI] 면접 질문 {}개를 성공적으로 저장했습니다.", savedCount);
+            var result = chatClient.prompt()
+                    .system(systemPrompt)
+                    .call();
 
-//        try {
-//            String systemPrompt = buildSystemPrompt(interviewId);
-//
-//            log.info("[AI] SystemPrompt 시작 =====");
-//            log.info(systemPrompt);
-//            log.info("[AI] SystemPrompt 끝 =====");
-//
-//            var result = chatClient.prompt()
-//                    .system(systemPrompt)
-//                    .call();
-//
-//            String response = result.content();
-//            log.info("[AI] LLM Response (raw): {}", response);
-//
-//            int savedCount = extractSavedCountFromLog(response);
-//            log.info("[AI] 면접 질문 {}개를 성공적으로 저장했습니다.", savedCount);
-//
-//        } catch (Exception e) {
-//            log.error("[AI] generateQuestions FAILED interviewId={}, reason={}",
-//                    interviewId, e.getMessage(), e);
-//            throw e;
-//        } finally {
-//            long end = System.currentTimeMillis();
-//            log.info("[AI] generateQuestions END interviewId={} duration={} ms",
-//                    interviewId, (end - start));
-//        }
+            String response = result.content();
+            log.info("[AI] LLM Response (raw): {}", response);
+
+            int savedCount = extractSavedCountFromLog(response);
+            log.info("[AI] 면접 질문 {}개를 성공적으로 저장했습니다.", savedCount);
+
+        } catch (Exception e) {
+            log.error("[AI] generateQuestions FAILED interviewId={}, reason={}",
+                    interviewId, e.getMessage(), e);
+            throw e;
+        } finally {
             long end = System.currentTimeMillis();
             log.info("[AI] generateQuestions END interviewId={} duration={} ms",
                     interviewId, (end - start));
+        }
     }
 
     private int extractSavedCountFromLog(String response) {
