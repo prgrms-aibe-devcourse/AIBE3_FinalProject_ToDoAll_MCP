@@ -19,7 +19,7 @@ public class AiInterviewService {
         log.info("[AI] generateQuestions START interviewId={}", interviewId);
         long start = System.currentTimeMillis();
         String systemPrompt = buildSystemPrompt(interviewId);
-
+        log.info("systemPrompt={}", systemPrompt);
         log.info("[AI] SystemPrompt 시작 =====");
         log.info(systemPrompt);
         log.info("[AI] SystemPrompt 끝 =====");
@@ -76,6 +76,7 @@ public class AiInterviewService {
     }
 
     private String buildSystemPrompt(Long interviewId) {
+        log.info("[AI] buildSystemPrompt START interviewId={}", interviewId);
         return """
                 너는 기업 채용 면접에서 사용할 질문을 설계하는 전문 AI 인터뷰 코파일럿이다.
                 네가 DB나 서버 데이터에 접근해야 할 때는 반드시 MCP tool을 사용해야 한다.
