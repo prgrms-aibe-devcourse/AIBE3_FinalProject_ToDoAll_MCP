@@ -18,7 +18,8 @@ spring:
         streamable-http:
           connections:
             jobda-server:
-              url: http://10.0.100.115:8080
+#              url: http://10.0.100.115:8080
+              url: http://localhost:8080
               endpoint: /mcp
         toolcallback:
           enabled: true
