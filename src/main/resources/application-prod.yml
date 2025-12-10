@@ -40,6 +40,6 @@ logging:
     org.springframework.ai.mcp: DEBUG
     org.springaicommunity.mcp: DEBUG
     org.springframework.web.client: DEBUG
-    org.springframework.http.client: DEBUG
+    org.springframework.http.client: TRACE
     com.mcp: DEBUG
     reactor.netty.http.client: TRACE
